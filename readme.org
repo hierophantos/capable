@@ -62,11 +62,10 @@
     Capabilities are a good way to organize an OS.
 
     * [[http://cap-lore.com/CapTheory/upenn/][KeyKOS]]
-      Developed in 1980s for IBM mainframes. Code for KeyKos is open source. 
-    Has inspired:
-      * [[https://web.archive.org/web/20031029002231/http://www.eros-os.org:80/][The EROS Operating System]]
-      * [[http://www.capros.org/][The CapROS Operating System]]
-      * [[http://www.coyotos.org/][Coyotes OS]]
+      Developed in 1980s for IBM mainframes. Code for KeyKos is open source. Has inspired:
+      - [[https://web.archive.org/web/20031029002231/http://www.eros-os.org:80/][The EROS Operating System]]
+      - [[http://www.capros.org/][The CapROS Operating System]]
+      - [[http://www.coyotos.org/][Coyotes OS]]
     * [[https://sel4.systems/][seL4]] is a secure variant of the L4 operating system. Also open source.
     * often don't need to depend on legacy systems and can be more stand alone, and so these operating systems can be an opportunity for embedded devices
     * recent security incidents around compromised IoT devices highlight the vulnerability of application code that have unfettered access to the underlying hardware. This massive violation of least privilege then makes these devices highly vulnerable to exploitation when an attacker finds flaws in the application code.
