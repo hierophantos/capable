@@ -1,52 +1,54 @@
 * [[http://habitatchronicles.com/2017/05/what-are-capabilities/][Habitat Chronicles: What Are Capabilities?]]
-  Great starter info on capabilities, by Chip.
-** Links  
-*** [[https://research.google.com/pubs/pub40673.html][Distributed Electronic Rights in JavaScript]]
-*** [[http://www.cap-lore.com/CapTheory/][Capability Theory by Sound Bytes]]
-*** [[https://www.princeton.edu/~rblee/ELE572Papers/Fall04Readings/ProgramSemantics_DennisvanHorn.pdf][Programming Semantics for Multiprogrammed Computations]]
-*** [[http://wiki.erights.org/wiki/Walnut][Category:Walnut — ERights.org Wiki]]
-*** [[http://eprint.iacr.org/2012/524.pdf][Tahoe - The Least-Authority Filesystem]]
-** notes
-   * in the ocap model, a resource is an object and a capability is an object reference.
+  Comprehensive starter article on capabilities, by Chip.
+** Summary
+   * in the ocap model, a resource is an object and a *capability is an object reference*.
    * The access that a given capability enables is the method interface that the object reference exposes. 
    * A capability is single thing that both designates a resource and authorizes some kind of access to it.
    * Norm Hardy’s motto: “don’t separate designation from authority”
      - By designation, we mean indicating, somehow, specifically which resource we’re talking about. 
      - And by authorizing we mean that we are allowing the access to happen. Hopefully, none of this is any surprise.
-   * *encapsulation/confinement*
+   * *capabilities ensure encapsulation/confinement*
    * *capabilities are transferable*
      "An important implication that falls out of this is that capabilities fundamentally enable delegation of authority. If you are able to do something, it means you possess a capability for that something. If you pass this capability to somebody else, then they are now also able do whatever it is. Delegation is one of the main things that make capabilities powerful and useful."
    * *capabilities must be unforgeable*
      "you can’t by yourself create a capability to a resource that you don’t already have access to"
    * in an object capabilitiy (ocap) system, a reference to an object is a capability.
      - objects both wield capabilities and are resources themselves
-   * three ways to obtain a capabilitiy in an ocap system:
+** three ways to obtain a capabilitiy in an ocap system:
+   1. *creation*
+      * We follow the convention that, as a byproduct of the act of creation, the creator receives a capability that provides full access to the new resource. 
+   2. *transfer*
+      * Capability passing is how the authority graph – the map of who has what authority to do what with what – can change over time
+      * the lack of a principled way to talk about how authorities change over time is another big problem with the ACL model
+   3. *endowment*
+      * Endowment means you were born with the capability. An object’s creator can give it a reference to some other object as part of its initial state.
+      * creation + transfer
+      * can use to have an immutable object that holds a capability
+      * avoid infinite regress
+  * In OCaps, the vast majority of access control decisions are realized by the logic of how the resources themselves operate. Most access control choices are subsumed by the code of the corresponding objects. At the granularity of individual objects, the decisions to be made are usually simple and clear from context, further reducing the cognitive burden. Only at the periphery, where the system comes into actual contact with its human users, do questions of policy and human intent arise. And in many of these cases, intent can be inferred from the normal acts of control and designation that users make through their normal UI interactions (such as picking a file from a dialog or clicking on a save button, to return to the example we began with).
+  * Consequently, thinking about access control policy and administration is an entirely different activity in an ocap system than in an ACL system. This thinking extends into the fundamental architecture of applications themselves, as well as that of things like programming languages, application frameworks, network protocols, and operating systems.
+** Capability Patterns
+*** Modulation
+    * One object modulates access to another object
+    * Example: *revoker*
+      Instead of giving my reference (capability), I give an intermediate object that holds my capability but remains controlled by me. Example: a message forwarder that can later drop its forwarding pointer.
+      - The revoker pattern can be extended to enable delegation to be auditable
+    * Can switch on or off, can depend on time, date, location, etc.
+    * Can put control on the frequency or quantity used
+    * Example: Use-once capability with a built-in expiration date
+    * Example: An intermediate object that requires payment in exchange for access, etc
 
-     1. creation
-        * We follow the convention that, as a byproduct of the act of creation, the creator receives a capability that provides full access to the new resource. 
+    * capabilities are essentially bearer instruments -- they convey their authority to whoever holds them, without regard to who the holder is
+*** Attenuation
+    * reducing a capability's scope of authority
+    * 
+*** Abstraction
+*** Combination
 
-     2. transfer
-        * Capability passing is how the authority graph – the map of who has what authority to do what with what – can change over time
-        * the lack of a principled way to talk about how authorities change over time is another big problem with the ACL model
 
-     3. endowment
-        * Endowment means you were born with the capability. An object’s creator can give it a reference to some other object as part of its initial state.
-        * creation + transfer
-        * can use to have an immutable object that holds a capability
-        * avoid infinite regress
-   * In OCaps, the vast majority of access control decisions are realized by the logic of how the resources themselves operate. Most access control choices are subsumed by the code of the corresponding objects. At the granularity of individual objects, the decisions to be made are usually simple and clear from context, further reducing the cognitive burden. Only at the periphery, where the system comes into actual contact with its human users, do questions of policy and human intent arise. And in many of these cases, intent can be inferred from the normal acts of control and designation that users make through their normal UI interactions (such as picking a file from a dialog or clicking on a save button, to return to the example we began with).
-   * Consequently, thinking about access control policy and administration is an entirely different activity in an ocap system than in an ACL system. This thinking extends into the fundamental architecture of applications themselves, as well as that of things like programming languages, application frameworks, network protocols, and operating systems.
-   * Capability Patterns
-     + Modulation
-       - One object modulates access to another object
-       - *revoker*
-         Instead of giving my reference (capability), I give an intermediate object that holds my capability but remains controlled by me. Example: a message forwarder that can later drop its forwarding pointer.
-       - Can switch on or off, can depend on time, date, location, etc.
-       - can put control on the frequency or 
-          
-
-     + Attenuation
-
-     + Abstraction
-
-     + Combination
+** Links  
+   * [[https://research.google.com/pubs/pub40673.html][Distributed Electronic Rights in JavaScript]]
+   * [[http://www.cap-lore.com/CapTheory/][Capability Theory by Sound Bytes]]
+   * [[https://www.princeton.edu/~rblee/ELE572Papers/Fall04Readings/ProgramSemantics_DennisvanHorn.pdf][Programming Semantics for Multiprogrammed Computations]]
+   * [[http://wiki.erights.org/wiki/Walnut][Category:Walnut — ERights.org Wiki]]
+*** [[http://eprint.iacr.org/2012/524.pdf][Tahoe - The Least-Authority Filesystem]]
