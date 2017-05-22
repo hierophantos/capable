@@ -7,9 +7,9 @@
    * Norm Hardy’s motto: “don’t separate designation from authority”
      - By designation, we mean indicating, somehow, specifically which resource we’re talking about. 
      - And by authorizing we mean that we are allowing the access to happen. Hopefully, none of this is any surprise.
-   * *capabilities ensure encapsulation/confinement*
    * *capabilities are transferable*
      "An important implication that falls out of this is that capabilities fundamentally enable delegation of authority. If you are able to do something, it means you possess a capability for that something. If you pass this capability to somebody else, then they are now also able do whatever it is. Delegation is one of the main things that make capabilities powerful and useful."
+   * *object capabilities require strong encapsulation* so that one object can hold onto references to other objects in a way that these can’t be accessed from outside it
    * *capabilities must be unforgeable*
      "you can’t by yourself create a capability to a resource that you don’t already have access to"
    * in an object capabilitiy (ocap) system, a reference to an object is a capability.
@@ -41,7 +41,6 @@
     * Can put control on the frequency or quantity used
     * Example: Use-once capability with a built-in expiration date
     * Example: An intermediate object that requires payment in exchange for access, etc
-
     * capabilities are essentially bearer instruments -- they convey their authority to whoever holds them, without regard to who the holder is
 *** Attenuation
     * reducing a capability's scope of authority
@@ -56,8 +55,7 @@
     * example: package read-only file cap into an input steram object
     * example: Unix `passwd` command is an example of abstracting lower level details of file access and data formats
 *** Combination
-    * Uses two or more capabilities together to create a new capability to some specific joint functionality
-    * Or, create something truly new
+    * Uses two or more capabilities together to create a new capability to some specific joint functionality, or create something truly new
     * Example: In a Cap OS for mobile smartphones, having a combined capability composed of the /authority/ to capture images with camera, the /authority/ to obtain position with GPS, the /authority/ to read system clock.
 
 ** Key areas where capabilities can have impact
