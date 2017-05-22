@@ -14,19 +14,20 @@
      "you can’t by yourself create a capability to a resource that you don’t already have access to"
    * in an object capabilitiy (ocap) system, a reference to an object is a capability.
      - objects both wield capabilities and are resources themselves
+   * *Principle of Least Authority (POLA)*: 
 ** three ways to obtain a capabilitiy in an ocap system:
-   1. *creation*
+   1. *Creation*
       * We follow the convention that, as a byproduct of the act of creation, the creator receives a capability that provides full access to the new resource. 
-   2. *transfer*
+   2. *Transfer*
       * Capability passing is how the authority graph – the map of who has what authority to do what with what – can change over time
       * the lack of a principled way to talk about how authorities change over time is another big problem with the ACL model
-   3. *endowment*
+   3. *Endowment*
       * Endowment means you were born with the capability. An object’s creator can give it a reference to some other object as part of its initial state.
       * creation + transfer
       * can use to have an immutable object that holds a capability
       * avoid infinite regress
-  * In OCaps, the vast majority of access control decisions are realized by the logic of how the resources themselves operate. Most access control choices are subsumed by the code of the corresponding objects. At the granularity of individual objects, the decisions to be made are usually simple and clear from context, further reducing the cognitive burden. Only at the periphery, where the system comes into actual contact with its human users, do questions of policy and human intent arise. And in many of these cases, intent can be inferred from the normal acts of control and designation that users make through their normal UI interactions (such as picking a file from a dialog or clicking on a save button, to return to the example we began with).
-  * Consequently, thinking about access control policy and administration is an entirely different activity in an ocap system than in an ACL system. This thinking extends into the fundamental architecture of applications themselves, as well as that of things like programming languages, application frameworks, network protocols, and operating systems.
+   4. In OCaps, the vast majority of access control decisions are realized by the logic of how the resources themselves operate. Most access control choices are subsumed by the code of the corresponding objects. At the granularity of individual objects, the decisions to be made are usually simple and clear from context, further reducing the cognitive burden. Only at the periphery, where the system comes into actual contact with its human users, do questions of policy and human intent arise. And in many of these cases, intent can be inferred from the normal acts of control and designation that users make through their normal UI interactions (such as picking a file from a dialog or clicking on a save button, to return to the example we began with).
+   5. Consequently, thinking about access control policy and administration is an entirely different activity in an ocap system than in an ACL system. This thinking extends into the fundamental architecture of applications themselves, as well as that of things like programming languages, application frameworks, network protocols, and operating systems.
 ** Capability Patterns
 *** Modulation
     * One object modulates access to another object
@@ -58,25 +59,56 @@
 
 ** Key areas where capabilities can have impact
 *** Embedded systems
-    Caps are a good way to organize an OS.
+    Capabilities are a good way to organize an OS.
+
     * [[http://cap-lore.com/CapTheory/upenn/][KeyKOS]]
       Developed in 1980s for IBM mainframes. Code for KeyKos is open source. 
     Has inspired:
       * [[https://web.archive.org/web/20031029002231/http://www.eros-os.org:80/][The EROS Operating System]]
       * [[http://www.capros.org/][The CapROS Operating System]]
       * [[http://www.coyotos.org/][Coyotes OS]]
-    * [[https://sel4.systems/][seL4]]
+    * [[https://sel4.systems/][seL4]] is a secure variant of the L4 operating system. Also open source.
+    * often don't need to depend on legacy systems and can be more stand alone, and so these operating systems can be an opportunity for embedded devices
+    * recent security incidents around compromised IoT devices highlight the vulnerability of application code that have unfettered access to the underlying hardware. This massive violation of least privilege then makes these devices highly vulnerable to exploitation when an attacker finds flaws in the application code.
+    * Rigorously compartmentalizing available functionality would greatly reduce the chances of these kinds of vulnerabilities
+    * Developers would like to build more secure systems. "One way to tilt the balance in our favor would be to give them a platform that more or less automatically delivers desirable security and reliability properties as a consequence of developers simply following the path of least resistance. This is the payoff that building on top of a capability OS offers."
 
 *** Compartmentalized computation
+   * *Safety-through-compartmentalization*: isolate independent pieces of computation so they can’t interfere with each other
+   * even if an individual VM is compromised due to an exploitable flaw in the particular mix of application code, libraries, and OS services that it happens to be running, this does not gain the attacker access to other, adjacent VMs running on the same hardware
+   * What virtualization brings to the table is to give application and service operators control over a raft of version and configuration management issues that were traditionally out of their hands
+   * *Virtualization doesn’t just free us from fights over which version of Linux to use, but which operating system entirely*
+   * Can run [[https://wiki.sel4.systems/FrequentlyAskedQuestions#Can_I_run_Linux_on_top_of_seL4.3F][Linux on seL4]]
+   * [[https://github.com/tc39/proposal-frozen-realms][Frozen Realms]] - capability-based containment module on the road to ecmascript standardization
+
 *** Distributed services
+    *the service chaining problem*:
+    One service requests another service, perhaps requesting yet another service. Whose authority is used/needed? If you give credentials to one, it can exercise any authority you can on your behalf, perhaps maliciously or in undesired or unintended ways and can be a source of exploitation. 
+    * Examples of implementing ocaps in existing infrastructure
+      * Alan Karp's [[http://www.hpl.hp.com/techreports/2007/HPL-2007-105.html][Zebra Copy: A Reference Implementation of Federated Access Management]]: Federated Identity Management for services that cross enterprise boundaries
+      * [[https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language][Security Assertion Markup Language - Wikipedia]]
+      * [[https://tools.ietf.org/html/rfc6750][RFC 6750 - The OAuth 2.0 Authorization Framework: Bearer Token Usage]]
+
 *** Software engineering practices
-
-** Conclusion
-
+    Capabilities as applied in software application, such as language usage/design.
+    * "code produced with [object capabilities tools] and techniques had greater odds of being correct on the first try compared to historical experience"
+    * "The key insight is that measures that prevent deliberate misbehavior tend to be good at preventing accidental misbehavior also"
+    * [[http://www.erights.org/][E programming language]]
+    * [[https://en.wikipedia.org/wiki/Joe-E][Joe-E - Wikipedia]] - a pure ocap subset of Java
+    * *taming*:  pruning the standards library of unsafe code
+    * Rules for taming Java:
+      1. All instance variables must be private
+      2. No mutable static state or statically accessible authority
+         - static variables must be declared `final`
+         - may only reference objects that are themselves transitively immutable
+         - constructors and static methods must not provide access to any mutable state or side-effects
+      3. No mutable state accessible across thread boundaries
+      * These rules simply ensure the qualities of reference unforgeability and encapsulation
 
 ** Links  
-   * [[https://research.google.com/pubs/pub40673.html][Distributed Electronic Rights in JavaScript]]
    * [[http://www.cap-lore.com/CapTheory/][Capability Theory by Sound Bytes]]
+   * [[http://www.hpl.hp.com/techreports/2007/HPL-2007-105.html][Zebra Copy: A Reference Implementation of Federated Access Management]]
    * [[https://www.princeton.edu/~rblee/ELE572Papers/Fall04Readings/ProgramSemantics_DennisvanHorn.pdf][Programming Semantics for Multiprogrammed Computations]]
    * [[http://wiki.erights.org/wiki/Walnut][Category:Walnut — ERights.org Wiki]]
+   * [[https://research.google.com/pubs/pub40673.html][Distributed Electronic Rights in JavaScript]]
    * [[http://eprint.iacr.org/2012/524.pdf][Tahoe - The Least-Authority Filesystem]]
