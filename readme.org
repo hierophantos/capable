@@ -96,12 +96,12 @@
     * [[https://en.wikipedia.org/wiki/Joe-E][Joe-E - Wikipedia]] - a pure ocap subset of Java
     * *taming*:  pruning the standards library of unsafe code
     * Rules for taming Java:
-      1. All instance variables must be private
-      2. No mutable static state or statically accessible authority
+      1) All instance variables must be private
+      2) No mutable static state or statically accessible authority
          - static variables must be declared `final`
          - may only reference objects that are themselves transitively immutable
          - constructors and static methods must not provide access to any mutable state or side-effects
-      3. No mutable state accessible across thread boundaries
+      3) No mutable state accessible across thread boundaries
       * These rules simply ensure the qualities of reference unforgeability and encapsulation
 
 ** Links  
