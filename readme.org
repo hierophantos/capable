@@ -1,6 +1,6 @@
 * [[http://habitatchronicles.com/2017/05/what-are-capabilities/][Habitat Chronicles: What Are Capabilities?]]
   Comprehensive starter article on capabilities, by Chip.
-** Summary
+** Intro
    * in the ocap model, a resource is an object and a *capability is an object reference*.
    * The access that a given capability enables is the method interface that the object reference exposes. 
    * A capability is single thing that both designates a resource and authorizes some kind of access to it.
@@ -41,9 +41,37 @@
     * capabilities are essentially bearer instruments -- they convey their authority to whoever holds them, without regard to who the holder is
 *** Attenuation
     * reducing a capability's scope of authority
-    * 
+    * Example: An OCap may have access to a computer's file system. Using attenuation, we can return an intermediary capability of just a particular file or subdirectory.
+    * Read-only access
+    * useful for packaging access to existing, non-capablity oriented world into capabilities
+    * mediate access to network communications
+      - limit connections to particular domains
+      - allow applications to be securely distributed across datacenters without enabling them to talk to arbitrary hosts on the internet -- the sort of thing that would normally be regulated by firewall configuration, but without the operational overhead or administrative inconvenience
 *** Abstraction
+    * Packing lower level capabilities into more convenient APIs
+    * example: package read-only file cap into an input steram object
+    * example: Unix `passwd` command is an example of abstracting lower level details of file access and data formats
 *** Combination
+    * Uses two or more capabilities together to create a new capability to some specific joint functionality
+    * Or, create something truly new
+    * Example: In a Cap OS for mobile smartphones, having a combined capability composed of the /authority/ to capture images with camera, the /authority/ to obtain position with GPS, the /authority/ to read system clock.
+
+** Key areas where capabilities can have impact
+*** Embedded systems
+    Caps are a good way to organize an OS.
+    * [[http://cap-lore.com/CapTheory/upenn/][KeyKOS]]
+      Developed in 1980s for IBM mainframes. Code for KeyKos is open source. 
+    Has inspired:
+      * [[https://web.archive.org/web/20031029002231/http://www.eros-os.org:80/][The EROS Operating System]]
+      * [[http://www.capros.org/][The CapROS Operating System]]
+      * [[http://www.coyotos.org/][Coyotes OS]]
+    * [[https://sel4.systems/][seL4]]
+
+*** Compartmentalized computation
+*** Distributed services
+*** Software engineering practices
+
+** Conclusion
 
 
 ** Links  
@@ -51,4 +79,4 @@
    * [[http://www.cap-lore.com/CapTheory/][Capability Theory by Sound Bytes]]
    * [[https://www.princeton.edu/~rblee/ELE572Papers/Fall04Readings/ProgramSemantics_DennisvanHorn.pdf][Programming Semantics for Multiprogrammed Computations]]
    * [[http://wiki.erights.org/wiki/Walnut][Category:Walnut — ERights.org Wiki]]
-*** [[http://eprint.iacr.org/2012/524.pdf][Tahoe - The Least-Authority Filesystem]]
+   * [[http://eprint.iacr.org/2012/524.pdf][Tahoe - The Least-Authority Filesystem]]
