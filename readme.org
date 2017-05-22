@@ -15,7 +15,7 @@
    * in an object capabilitiy (ocap) system, a reference to an object is a capability.
      - objects both wield capabilities and are resources themselves
    * *Principle of Least Authority (POLA)*: 
-** three ways to obtain a capabilitiy in an ocap system:
+** Three ways to obtain a capabilitiy in an ocap system:
    1. *Creation*
       * We follow the convention that, as a byproduct of the act of creation, the creator receives a capability that provides full access to the new resource. 
    2. *Transfer*
@@ -26,8 +26,11 @@
       * creation + transfer
       * can use to have an immutable object that holds a capability
       * avoid infinite regress
-   4. In OCaps, the vast majority of access control decisions are realized by the logic of how the resources themselves operate. Most access control choices are subsumed by the code of the corresponding objects. At the granularity of individual objects, the decisions to be made are usually simple and clear from context, further reducing the cognitive burden. Only at the periphery, where the system comes into actual contact with its human users, do questions of policy and human intent arise. And in many of these cases, intent can be inferred from the normal acts of control and designation that users make through their normal UI interactions (such as picking a file from a dialog or clicking on a save button, to return to the example we began with).
-   5. Consequently, thinking about access control policy and administration is an entirely different activity in an ocap system than in an ACL system. This thinking extends into the fundamental architecture of applications themselves, as well as that of things like programming languages, application frameworks, network protocols, and operating systems.
+   
+   In OCaps, the vast majority of access control decisions are realized by the logic of how the resources themselves operate. Most access control choices are subsumed by the code of the corresponding objects. At the granularity of individual objects, the decisions to be made are usually simple and clear from context, further reducing the cognitive burden. Only at the periphery, where the system comes into actual contact with its human users, do questions of policy and human intent arise. And in many of these cases, intent can be inferred from the normal acts of control and designation that users make through their normal UI interactions (such as picking a file from a dialog or clicking on a save button, to return to the example we began with).
+   
+   Consequently, thinking about access control policy and administration is an entirely different activity in an ocap system than in an ACL system. This thinking extends into the fundamental architecture of applications themselves, as well as that of things like programming languages, application frameworks, network protocols, and operating systems.
+
 ** Capability Patterns
 *** Modulation
     * One object modulates access to another object
@@ -96,12 +99,12 @@
     * [[https://en.wikipedia.org/wiki/Joe-E][Joe-E - Wikipedia]] - a pure ocap subset of Java
     * *taming*:  pruning the standards library of unsafe code
     * Rules for taming Java:
-      1) All instance variables must be private
-      2) No mutable static state or statically accessible authority
+      1. All instance variables must be private
+      2. No mutable static state or statically accessible authority
          - static variables must be declared `final`
          - may only reference objects that are themselves transitively immutable
          - constructors and static methods must not provide access to any mutable state or side-effects
-      3) No mutable state accessible across thread boundaries
+      3. No mutable state accessible across thread boundaries
       * These rules simply ensure the qualities of reference unforgeability and encapsulation
 
 ** Links  
