@@ -5,8 +5,8 @@
    * The access that a given capability enables is the method interface that the object reference exposes. 
    * A capability is single thing that both designates a resource and authorizes some kind of access to it.
    * Norm Hardy’s motto: “don’t separate designation from authority”
-     - By designation, we mean indicating, somehow, specifically which resource we’re talking about. 
-     - And by authorizing we mean that we are allowing the access to happen. Hopefully, none of this is any surprise.
+     - By designation, we mean indicating specifically which resource we’re talking about. 
+     - And by authorizing we mean that we are allowing the access to happen.
    * *capabilities are transferable*
      "An important implication that falls out of this is that capabilities fundamentally enable delegation of authority. If you are able to do something, it means you possess a capability for that something. If you pass this capability to somebody else, then they are now also able do whatever it is. Delegation is one of the main things that make capabilities powerful and useful."
    * *object capabilities require strong encapsulation* so that one object can hold onto references to other objects in a way that these can’t be accessed from outside it
